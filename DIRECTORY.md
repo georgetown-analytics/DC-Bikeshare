@@ -5,6 +5,8 @@
 ├── README.md          <- The top-level README for our Capstone project results.
 ├── DICTIONARY.md      <- The data dictionary.
 ├── DIRECTORY.md       <- The directory and sub-directory structure.
+├── archive            <- Scripts archives as not to be included in final script ecosystem
+│
 ├── database           <- Scripts to build the final database to be used for Machine Learning
 │                         and Exploratory Plots
 │
@@ -18,6 +20,7 @@
 │                          regarding quality of dockless data provided.
 │
 ├── machine_learning   <- Scripts used to build Machine Learning models 
+│   └── visualizations <- Scripts to build machine learning visulizations
 │
 ├── maps               <- Scripts used to build Altair Chloropeths of Dockless and CaBi Trip by ANC
 │
