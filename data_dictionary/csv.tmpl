@@ -1,0 +1,8 @@
+{%- for schema in dictionary -%}
+Table|Attribute|Type|Nullable|Description
+{%- for table in schema['tables'] -%}
+{%- for column in table['columns'] %}
+{{table['table']}}|{{column['column']}}|{{column['data_type']}}|{{column['is_nullable']}}|{{column['description']}}
+{%- endfor %}
+{%- endfor %}
+{%- endfor %}

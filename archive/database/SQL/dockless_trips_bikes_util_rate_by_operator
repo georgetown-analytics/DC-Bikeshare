@@ -1,0 +1,9 @@
+﻿select distinct 
+		startdate::timestamp::date as trip_date,
+		operator, 
+		count(*) as trips,
+		count(distinct bikeid) as bikes_available,
+		count(*)/count(distinct bikeid)::float as util_rate
+from dockless_trips
+group by 1,2
+order by 1,2;
