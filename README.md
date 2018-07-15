@@ -1,8 +1,10 @@
 # DC-Bikeshare
+
 Cohort 11 Capstone Project for the Certificate of Data Science at Georgetown University School of Continuing Studies.
 _Sebastian Bautista, Travis Gervais, Noah Newberger, and Mark Sussman_
 
 ## README Contents
+
 1. [Abstract](#abstract)
 1. [NDA Explanation](#nda-explanation)
 1. [Background Information](#background-information)
@@ -10,6 +12,10 @@ _Sebastian Bautista, Travis Gervais, Noah Newberger, and Mark Sussman_
 1. [Data Architecture](#data-architecture)
 1. [Capital Bikeshare Exploration](#capital-bikeshare-exploration)
 1. [Machine Learning](#machine-learning)
+1. [Results](#results)
+1. [Limitations and Areas for Future Study](#limitations-and-areas-for-future-study)
+1. [Conclusion](#conclusion)
+1. [Maps](#maps)
 1. [Acknowledgements](#acknowledgements)
 1. [References](#references)
 
@@ -25,24 +31,23 @@ The remainder of this README will walk through our finding that were Capital Bik
 
 ## Background Information
 
-In September 2010,  Capital Bikeshare (CaBi) began operating in the Washington, DC region with 1,100 bikes and 114 stations in Washington, DC and Arlington, VA (Motivate International, Inc, 2017). Since then CaBi has grown to approximately 437 stations and 4,500 bikes. It has expanded its coverage to include, Alexandria, VA, Montgomery County, MD, and Fairfax County, VA. The system, which sees an average of over 10,000 trips per day, has grown to be the third largest bikeshare system currently operating in the United States. 
+In September 2010,  Capital Bikeshare (CaBi) began operating in the Washington, DC region with 1,100 bikes and 114 stations in Washington, DC and Arlington, VA (Motivate International, Inc, 2017). Since then CaBi has grown to approximately 437 stations and 4,500 bikes. It has expanded its coverage to include, Alexandria, VA, Montgomery County, MD, and Fairfax County, VA. The system, which sees an average of over 10,000 trips per day, has grown to be the third largest bikeshare system currently operating in the United States.
 
-In September 2017, the DC department of Transportation (DDOT) began a pilot program in Washington, DC which allowed for five dockless bikeshare companies to begin operating in the city (Sturdivant, 2017). Dockless bikeshare bikes differ notably from CaBi in that the bikes do not need to be taken from or returned to physical docking stations. Instead, the dockless bikes can be left anywhere in the city as long as they are on public property and they are not obstructing roadways or pedestrian walkways. The lack of infrastructural prerequisites meant that seemingly overnight several fleets of brightly colored bikes appeared on the streets. Under regulations established by DDOT for the dockless bikeshare pilot program, each operator is permitted to have a maximum of 400 vehicles on the street at any given time (Ryan, 2017). For the first several months of the pilot program, vehicle was synonymous with bike until electric scooters were introduced in March and Lime reduced the number of bikes in their fleet in order to increase the number of scooters (Seher, 2018).  The pilot program presented a unique opportunity to study the effect that the introduction of a new mode of might have on the demand for a well-established bikeshare system. In this paper we use machine learning to predict the demand for CaBi through the duration of the pilot program, and by comparing the predicted demand with the actual demand, we attempt to determine to what extent the dockless bikeshare operators have been able to disrupt the status quo. 
+In September 2017, the DC department of Transportation (DDOT) began a pilot program in Washington, DC which allowed for five dockless bikeshare companies to begin operating in the city (Sturdivant, 2017). Dockless bikeshare bikes differ notably from CaBi in that the bikes do not need to be taken from or returned to physical docking stations. Instead, the dockless bikes can be left anywhere in the city as long as they are on public property and they are not obstructing roadways or pedestrian walkways. The lack of infrastructural prerequisites meant that seemingly overnight several fleets of brightly colored bikes appeared on the streets. Under regulations established by DDOT for the dockless bikeshare pilot program, each operator is permitted to have a maximum of 400 vehicles on the street at any given time (Ryan, 2017). For the first several months of the pilot program, vehicle was synonymous with bike until electric scooters were introduced in March and Lime reduced the number of bikes in their fleet in order to increase the number of scooters (Seher, 2018).  The pilot program presented a unique opportunity to study the effect that the introduction of a new mode of might have on the demand for a well-established bikeshare system. In this paper we use machine learning to predict the demand for CaBi through the duration of the pilot program, and by comparing the predicted demand with the actual demand, we attempt to determine to what extent the dockless bikeshare operators have been able to disrupt the status quo.
 
 ## Data Sourcing
 
-The data that was gathered for this project fell into one of three categories: 
+The data that was gathered for this project fell into one of three categories:
 
 1. CaBi Data - Publicly available [system data](https://s3.amazonaws.com/capitalbikeshare-data/index.html) and [API](https://gbfs.capitalbikeshare.com/gbfs/gbfs.json)
 
 2. Dockless Bikeshare Data - Data provided by DDOT and API
-3. Misc Data - Data on a variety of factors, such as weather and population, that we believe would have an impact on the demand for bikeshares in Washington, DC. 
+3. Misc Data - Data on a variety of factors, such as weather and population, that we believe would have an impact on the demand for bikeshares in Washington, DC.
 
 Most of the data that was used for this project is publicly available data which we either downloaded, scraped or used an API to pull down from a website. Exceptionally, we received dockless trip data from DDOT and dockless bikes available data from [Daniel Schep](https://schep.me/) who had already put together a site to track all the bikeshare systems in DC.  He was kind enough to share his stored API data with us so that we could actually analyze dockless bikeshare utilization rates, as the data we received from the operators was not reliable.  As we began sourcing our data, we set up a meeting with DDOT to explain to them the goals and scope of our project and offer our assistance to help analyze the efficacy of the pilot program.  DDOT  agreed to share the data that they had with us on the condition that we share our findings with them at the end of our analysis and we sign a nondisclosure agreement agreeing not to divulge any of the dockless data to the general public.
 
-Under the rules of the pilot program, the dockless bikeshare operators are required to self-report data on a monthly basis to DDOT. The monthly reports include data on trip start and stop times, trip start and stop locations, and user id among other fields. The CSVs that we received required a significant amount of processing. For example, not every operator reported latitude and longitude trips starts/ends to the enough precision to determine actual location, which impacted our ability to compare trip locations across operators.  There were also inconsistencies with the start and end times for trips in the data that the dockless operators were self-reporting. In one extreme case it was discovered that the hours were missing from the timestamps for all trips for a particular operator. In another case, there were instances where the reported end time occurred before the reported start time which resulted in calculations for negative trip durations. 
+Under the rules of the pilot program, the dockless bikeshare operators are required to self-report data on a monthly basis to DDOT. The monthly reports include data on trip start and stop times, trip start and stop locations, and user id among other fields. The CSVs that we received required a significant amount of processing. For example, not every operator reported latitude and longitude trips starts/ends to the enough precision to determine actual location, which impacted our ability to compare trip locations across operators.  There were also inconsistencies with the start and end times for trips in the data that the dockless operators were self-reporting. In one extreme case it was discovered that the hours were missing from the timestamps for all trips for a particular operator. In another case, there were instances where the reported end time occurred before the reported start time which resulted in calculations for negative trip durations.
 Table descriptions and data dictionaries of all the data sources we used as can be found in our Github repo’s [data dictionary](https://github.com/georgetown-analytics/DC-Bikeshare/blob/master/DICTIONARY.md).
-
 
 ## Data Architecture
 
@@ -57,10 +62,10 @@ DDOT provided us with CaBi memberships (Annual, Monthly and Day Key) purchased p
 **Diagram 1:** Capital Bikeshare Data Flow
 ![alt text](./readme_images/Data_Architecture_CaBiData.png "")
 
-Diagram 2 shows the relationship of all dockless pilot related data.  The dockless trip data came in CSVs directly from DDOT and is similar to the CaBi Trip data, exchanging station information for start and end geo-coordinates 
+Diagram 2 shows the relationship of all dockless pilot related data.  The dockless trip data came in CSVs directly from DDOT and is similar to the CaBi Trip data, exchanging station information for start and end geo-coordinates
 
-CaBi station information is used here to determine closest CaBi Station that we used in some of our exploratory analysis.  We also used 
-CaBi station outage data to determine if closest CaBi station had bikes when dockless trip started, but this analysis ended up not being material. 
+CaBi station information is used here to determine closest CaBi Station that we used in some of our exploratory analysis.  We also used
+CaBi station outage data to determine if closest CaBi station had bikes when dockless trip started, but this analysis ended up not being material.
 
 We also compiled the pricing schemes for each dockless operator to calculate trip cost, but we didn't ended up not leveraging this data since start and end timestamps where suspect or non-existant, especially for Mobike.
 
@@ -82,7 +87,6 @@ DC population data came from the DC Office of Planning and the American Communit
 
 **Diagram 3:** Secondary Data Flow
 ![alt text](./readme_images/Data_Architecture_SecondaryData.png "")
-
 
 Diagram 4 shows how we brought all our data sources toget together into a AWS PostgreSQL database instance.  We used the [psycopg2](http://initd.org/psycopg/docs/) Python package to load all tables to our database.  The final database to be used for machine learning  generated by combining all these sources together and was feed into our machine learning pipeline so that we could predict daily CaBi demand for DC to DC rides for the dockless pilot period.
 
@@ -120,7 +124,7 @@ Figure 4 shows the bike utilization rate for members and casual users by day of 
 
 For our analysis, we use two competing machine learning models. In our models an instance is a single day and our goal is to predict the number of CaBi trips that start in DC and end in DC, taken on each day of the pilot program from September 9, 2017 to April 30, 2018. We only included DC to DC trips in our model because the pilot program restricts the dockless bikeshare operators to operate within the District of Columbia. We were able to determine the region where trips started and ended by using data that we collected from the CaBi API.  The time frame of our training data is limited to the period of time from January 1, 2013 to September 8, 2017. We started the training set in 2013 because of the rapid growth during the first two years of operation as shown in Figure 1, as well as data availability issues from the same time period.
 
-#### Lasso
+### Lasso
 
 We identified 18 features that we believed would be important to incorporate into our model. These features included daylight hours, apparent high temperature, U.S. holidays, and Washington Nationals games. We decided to use a smaller feature set with the Lasso model in order to minimize the chances of including collinear variables as features in our model. Multicollinearity among explanatory features in a linear model can have detrimental effects on coefficient estimates. We also dropped some features because of leakage issues - for example, some of our features are related to the duration that CaBi stations are empty or full in each day. Although these features are extremely predictive of CaBi trips, trips and empty duration are simultaneously co-determined, so we drop these features because of endogeneity issues.
 
@@ -138,9 +142,9 @@ In order to improve the fit of our Lasso model, we had to increase its complexit
 
 In order to fit our model, we used 5-fold cross-validation and an alpha search space of 250 logarithmically spaced points between .01 and 10.  The highest performance we got from the lasso model had an alpha of approximately 4.6 and a mean R<sup>2</sup> value of 0.852 with a standard deviation of 0.0175. The model tended to over-predict the number of CaBi rides taken per day which is evidenced by the sum of the residuals being negative. Table 1 shows a ranking of feature importance for the top 10 features out of the 75 that were selected for the lasso model. The interpretation of these feature interactions is difficult due to the increased complexity of the model. However, there is cross-over between several of the features that were identified as important in our simplified model and features that were incorporated into the more complicated Lasso model, suggesting that these may be important. Features such as apparent high temperature, population, humidity and precipitation probability appear on both lists.
 
-**Table 1**: Importance of Top 10 Features and Interaction Terms 
+**Table 1**: Importance of Top 10 Features and Interaction Terms
 
-Feature Interaction |0 | Sorted 
+Feature Interaction |0 | Sorted
 --- | ---: | ---:
 apparenttemperaturehigh - dc_pop | 2,400 | 2,400
 dc_pop- cos_day_of_year | -2,266 | 2,266
@@ -153,26 +157,91 @@ humidity - precipprobability | 1,003 | 1,003
 visibility - sin_day_of_year | -732  |  732
 precipprobability - visibility | 588 | 588
 
-
-
-#### Random Forest
+### Random Forest
 
 We wanted to experiment with a nonlinear regression method since we had already employed a linear regression model by using Lasso. Random forest, which uses bagging, seemed like a better option than using a boosting algorithm which could have potentially resulted in overfitting.  Additionally, random forest had the added bonus of not being negatively affected by multicollinearity among features like Lasso is. This enabled us to incorporate a larger set of 49 features into the model. We also did not need to do any preprocessing in terms of scaling or creating polynomial features to deal with interaction terms because of how decision trees consider features sequentially. Figure 7 shows the features ranked by importance, which basically means these features were used to create partitions. The five most important features for this model were apparent high temperature, number of active monthly CaBi users, apparent low temperature, the day of the year, and the sunset time. Note that these feature importances are less informative than those returned by Lasso since they don’t tell us anything about the direction of the effect, just relative magnitude.
 
 **Figure 7**: Feature Importance of 49 Features Selected for Random Forest Model
 ![alt text](./readme_images/Machine_Learning_rf_featureimportances.png "")
 
-In order to tune our hyperparameters for this model, we used RandomizedSearchCV to identify which hyperparameters to tune. There were 5,760 unique combinations of hyperparameters possible through the randomized search, and we tried 100 iterations over 5 folds. After confirming that this new model performed better than the untuned model, we used GridSearchCV with a smaller set of hyperparameters to then select the most performant combination. After performing 5-fold shuffled cross-validation we achieved a mean R<sup>2</sup> value of 0.902 with a standard deviation of 0.007. This model also tended to overpredict the number of CaBi rides. 
+In order to tune our hyperparameters for this model, we used RandomizedSearchCV to identify which hyperparameters to tune. There were 5,760 unique combinations of hyperparameters possible through the randomized search, and we tried 100 iterations over 5 folds. After confirming that this new model performed better than the untuned model, we used GridSearchCV with a smaller set of hyperparameters to then select the most performant combination. After performing 5-fold shuffled cross-validation we achieved a mean R<sup>2</sup> value of 0.902 with a standard deviation of 0.007. This model also tended to overpredict the number of CaBi rides.
 
-#### Results
+## Results
 
-Figure 8 plots the predicted values and the actual values for the number of CaBi rides for every date of the pilot program from September 9, 2017 to April 30, 2018. It also plots the prediction error for each day of the pilot program. Our model tended to overpredict the number of rides, as evidenced by the fact that the error term is less than 0 for most of the days within the pilot program. This suggests that the dockless pilot program might have had an impact on the demand for CaBi since there were fewer CaBi trips taken during the dockless period than our model predicted. 
+Figure 8 plots the predicted values and the actual values for the number of CaBi rides for every date of the pilot program from September 9, 2017 to April 30, 2018. It also plots the prediction error for each day of the pilot program. Our model tended to overpredict the number of rides, as evidenced by the fact that the error term is less than 0 for most of the days within the pilot program. This suggests that the dockless pilot program might have had an impact on the demand for CaBi since there were fewer CaBi trips taken during the dockless period than our model predicted.
 
 **Figure 8**: Actual vs. Predicted CaBi Rides during Dockless Pilot
 ![alt text](./readme_images/Machine_Learning_rf_total.png "")
 
+Figure 9 shows the impact score of the Dockless pilot program on the demand for CaBi. The impact score is defined as [(Predicted CaBi Trips - Actual CaBi Trips) / Actual Dockless Trips]. In the this figure, the average impact score hovers around 0.5 which could be interpreted as on average, our model’s overprediction is equivalent to 50% of dockless trips on a given day.  We cannot say for certain that dockless trips is the sole factor causing this overprediction, but there is certainly strong signal in that direction.  Figure 9 also makes it clear that there were several days where the impact score was significantly greater than the average impact score for the pilot program. This is due to the fact that our model greatly overpredicted the demand for CaBi on these days.
 
-The remainder of our analysis compares our results from our machine learning model to dockless trip data provided by DDOT and therefore we cannot include that analysis here due to NDA restrictions.
+The first “high impact” period came in the few days before and after January 1. There are two factors that might explain why our model was not able to accurately predict the demand for CaBi on these days. The first explanation is that our model did not account for the days before or after U.S. holidays, it just looked at whether or not the day for which it was predicting demand was a U.S. Holiday. Anecdotally speaking, during the winter holidays of Christmas and New Year’s people are more likely to take additional days off of work to travel. Also, some companies may close their offices for the week between Christmas and New Year’s. The second possible explanation is that the days at the end of 2017 and the beginning of 2018 were unseasonably cold. Our model did account for apparent high and low temperatures, but it is possible that our training set did not include enough instances with extremely cold temperatures to be able to accurately predict the demand for CaBi on these cold days.
+
+The second period of the pilot program where the calculated impact was significantly higher than the average occurred around March 21, 2018. This is when Washington, DC received several inches of snow which caused extensive school and work closures. CaBi even suspended service on this day because of the snowfall. Again, even though snow and precipitation accumulation were features in our model it is possible that there were not enough high snowfall days in our training set for the model to be able to accurately predict or account for a complete system closure by CaBi.
+
+**Figure 9**: Dockless Impact on CaBi
+![alt text](./readme_images/Machine_Learning_rf_total_impact.png "")
+
+## Limitations and Areas for Future Study
+
+It is difficult to draw any definitive conclusions from the analysis that we conducted for several reasons. First, the pilot program is still in its infancy. Our analysis only examined the first 8 months dockless bikeshare pilot and each operator was only allowed 400 bikes, a number well below what they would be outside the restrictions of the pilot.  During this time period, the dockless bikes were new and exciting for users which could have impacted their behavior. There has not been enough time yet for this “novelty” effect to wear off and demand to normalize among users. Figure 10 illustrates this novelty effect. It splits the pilot program period into the first four months (September through December) and the next four months (January through April) and plots the percentage of total trips during the dockless pilot that were taken on each day by all CaBi users, CaBi casual users and all dockless bikeshare users. The subplot on the left, which shows the first four months of the pilot program, shows a gradual increase in the percentage of total trips through the end of December for dockless bikeshare users, while for all CaBi users and CaBi casual users there is a negative trend going into the cooler winter months. In the next four months of the pilot program, the daily percentage of total trips for the dockless bikeshare users has a trend line with a slightly more positive slope than that of the first four months. This is expected as this follows the monthly bike utilization trends of CaBi that were exhibited in figure 3. The subplot on the right shows that the slope of the Dockless trendline lies between that of all Capital Bike users and Casual CaBi users.
+
+**Figure 10**: Daily Percentage of Total Trips over the Dockless Pilot Period
+![alt text](./readme_images/Dockless_Explore_Dockless_Pilot.png "")
+
+The novelty effect is again demonstrated in Figure 11, which shows the percentage of dockless users who have taken five trips or less compared to those who have taken more than five trips over the course of the pilot program. Only around 7% of users have regularly returned to the dockless bikeshare; taking more than 5 trips over the course of 8 months. This differs significantly from CaBi where most of the trips are taken by members. Mobike trips was not included in this plot because the data that they reported to DDOT did not include user IDs, so it was not possible to determine how many individual users were taking more than 5 trips.
+
+Figure 11 also suggests that the behavior of dockless bikeshare users is more akin to CaBi casual users than CaBi members. Figure 12 shows the time of day CaBi members, casual user and dockless user  trips are taken.   The majority of CaBi member trips are taken on weekdays. During mid-week, the majority of the trips occur during peak metro operating hours, suggesting that members are commuting to and from work.  CaBi casual users of follow a distinctly different usage pattern with the majority of their trips occur on the weekend.  For trips that do occur mid-week, a slightly greater portion of those are occurring during off-peak hours. Dockless trip usage pattern seems to fall somewhere in the middle of CaBi members and CaBi casual users. While the dockless bikeshare rides occur mostly on weekdays, the split between peak and off-peak hours is relatively even, suggesting that commuters usage is not as strong for the dockless bikeshare operators. There is also higher usage on the weekends by the dockless users compared to CaBi members.
+
+**Figure 11**: Percentage of Dockless Trips by Users that Have Taken More than 5 Trips by Operator
+![alt text](./readme_images/Dockless_Explore_users_pie.png "")
+
+**Figure 12**: Trips by Day of Week Based on Metro Operating Status
+![alt text](./readme_images/Dockless_Explore_metro.png "")
+
+Figure 13 also supports the hypothesis that Dockless users are more similar to CaBi casual users than they are to CaBi members. The subplot on the left shows the market share for all CaBi and dockless bikeshare operators over the 8 months of the pilot program that we analyzed. The market share for the dockless bikeshare operators grows over the first three months before stabilizing at around 20% in November. The subplot on the right compares dockless bikeshare rides to CaBi casual users and demonstrates an expansion and contraction that takes place over the 8 months that we analyzed. The market share for the dockless operators in this subplot peaks in January at around 66% before shrinking back to about 42% in by April. This makes sense when compared with what was demonstrated in figure 10 where dockless rides increased slightly over the first four months while rides taken by CaBi casual users decreased. From January through April, the number of casual CaBi rides increased at a faster rate than dockless rides. Further research into the dockless bikeshare pilot program should exam the impact that the dockless bikeshare pilot has had on the demand for CaBi trips by casual users.
+
+**Figure 13**: Market Share — CaBi vs Dockless
+![alt text](./readme_images/Dockless_Explore_Market_Share.png "")
+
+## Conclusion
+
+Our analysis suggests that the dockless pilot program has potentially had an impact on the demand for Capital Bikeshare within Washington, DC.  However, there are several limiting factors that detract for the veracity of this conclusion. One of which is the length of the pilot program and our analysis. The pilot program that we analyzed did not include the summer months. Based on our research we believe that these months will be most critical for the pilot program because this is where Capital Bikeshare see the biggest shift in usage by casual riders. The data suggest that dockless bikeshare users tend to follow usage patterns similar to those of casual Capital Bikeshare users. If the docklesss bikeshare pilot program were to have a significant long-term impact on Capital Bikeshare demand, it would be most pronounced during the summer. It also remains to be seen if the dockless bike share operators themselves are sustainable in the long-term. Table 2 shows that the dockless operators have cycled through a sizeable amount of bikes in the short timeframe of the pilot program. On operator has gone through over 2,600 bikes, more than six times the number of bikes they are allowed to have on the road at any given time. With bikes that are damaged or in disrepair, it is difficult for users to see these operators as a reliable and viable alternative to Capital Bikeshare.
+
+**Table 2**: Average Bike Age over Dockless Pilot Program (September - April)
+
+Age Stat |Min | Avg | Max | CaBi*
+--- | ---: | ---:| ---:| ---:
+Total Bikes | 211 | 1,786 | 2,649 | 4,925
+Replace Rate | 1.51 | 3.44 | 6.62 | 1.09
+Bike Age | 52 Days | 70 Days | 95 Days | 1,614 Days
+
+ *CaBi Stats for entire CaBi History (2010-2018)
+
+## Maps
+
+DDOT requested that we compare the service areas for CaBi and the dockless operators.  To that end we put together a series of chloropeth maps that provide some interesting insights.
+Map 1 shows DC’s eight geo-political wards. These wards are further broken down into 40 Advisory Neighborhood Commissions (ANCs).  These ANCs seemed to be about the right size to compare CaBi and the dockless operators and DDOT agreed when we presented these results to them.
+
+**Map 1**: Market Share — CaBi vs Dockless
+
+![alt text](./readme_images/Maps_DC_Wards.jpeg "")
+
+Map 2 shows two chloropeth maps of CaBi and dockless combined trip destinations split outby ANC for the entire dockless pilot period.  We can see that the concentration area isapproximately the same for both.  The main difference between the two is that the dockless tripdestinations are centered South and West along the National Mall, while CaBi trip destinations arecentered more toward Downtown DC.  This difference shows provides further evidence thatdockless trips act trend toward more casual usage.
+
+**Map 2**: Percent CaBi and Dockless Combined Trip Destinations by ANC
+
+![alt text](./readme_images/Maps_Ends.png "")
+
+We define geographic overlap between a dockless trip and Cabi as either the trip starts or ends within a quarter mile of a CaBi station.  Approximately 90% of all dockless trips are geographic overlaps.
+
+Map 3 shows the difference in ANC concentration for geographic overlap trips and non-geographic overlap trip destinations for all dockless operators combined for the dockless pilotperiod.  The geographic overlaps look much like the original dockless chloropeth, as they comprisemore than 90% of all dockless trip destinations.
+
+Non-Geographic overlaps are more spread out in Wards 3, 4 and 5,but still concentrated on the Mall.  However, the Mall trips are more concentratedin the southeast section of the Mall that has less CaBi Stations.  Regardless of geographic overlap,there is still no discernable presence detected in Wards 7 and 8.
+
+**Map 3**: Percent Dockless Combined Trip Destinations, Geographic Overlap and Not by ANC
+
+![alt text](./readme_images/Maps_Overlap.png "")
 
 ## Acknowledgements
 
