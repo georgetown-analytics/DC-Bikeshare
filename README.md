@@ -231,7 +231,7 @@ Map 2 shows two chloropeth maps of CaBi and dockless combined trip destinations 
 
 **Map 2**: Percent CaBi and Dockless Combined Trip Destinations by ANC
 
-![alt text](./readme_images/Maps_Ends.png "")
+![alt text](./readme_images/Maps_Ends.png#1 "")
 
 We define geographic overlap between a dockless trip and Cabi as either the trip starts or ends within a quarter mile of a CaBi station.  Approximately 90% of all dockless trips are geographic overlaps.
 
@@ -241,7 +241,7 @@ Non-Geographic overlaps are more spread out in Wards 3, 4 and 5,but still concen
 
 **Map 3**: Percent Dockless Combined Trip Destinations, Geographic Overlap and Not by ANC
 
-![alt text](./readme_images/Maps_Overlap.png "")
+![alt text](./readme_images/Maps_Overlap.png#2 "")
 
 ## Acknowledgements
 
