@@ -5,7 +5,7 @@
 ├── README.md                <- The top-level README for our Capstone project results.
 ├── DICTIONARY.md            <- The data dictionary.
 ├── DIRECTORY.md             <- The directory and sub-directory structure.
-├── public_presentation.pdf  <- Public version of our report that redacts sensative data.
+├── public_presentation.pdf  <- Public version of our presentation that redacts sensative data.
 ├── public_report.pdf        <- Public version of our report that redacts sensative data.
 ├── archive                  <- Scripts archives as not to be included in final script ecosystem
 │
