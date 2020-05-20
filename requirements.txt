@@ -25,7 +25,7 @@ google-api-python-client==1.6.5
 haversine==0.4.5
 holidays==0.9.5
 html5lib==1.0.1
-httplib2==0.10.3
+httplib2==0.18.0
 idna==2.6
 ipython-genutils==0.2.0
 jdcal==1.4
