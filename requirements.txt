@@ -29,7 +29,7 @@ httplib2==0.10.3
 idna==2.6
 ipython-genutils==0.2.0
 jdcal==1.4
-Jinja2==2.10
+Jinja2==2.11.3
 jinja2-time==0.2.0
 jmespath==0.9.3
 jsonschema==2.6.0
